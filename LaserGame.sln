@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LaserGame", "LaserGame\LaserGame.csproj", "{E78A88BD-2DC2-4CF1-9931-B4CC4475D43D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaserGameTest", "LaserGameTest\LaserGameTest.csproj", "{377D3CAF-DFF7-4359-B1E1-28B908979E49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E78A88BD-2DC2-4CF1-9931-B4CC4475D43D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E78A88BD-2DC2-4CF1-9931-B4CC4475D43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E78A88BD-2DC2-4CF1-9931-B4CC4475D43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E78A88BD-2DC2-4CF1-9931-B4CC4475D43D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{377D3CAF-DFF7-4359-B1E1-28B908979E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{377D3CAF-DFF7-4359-B1E1-28B908979E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{377D3CAF-DFF7-4359-B1E1-28B908979E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{377D3CAF-DFF7-4359-B1E1-28B908979E49}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BEE468BC-C2BE-40C4-B05D-070DF5DDA6C2}
+	EndGlobalSection
+EndGlobal
