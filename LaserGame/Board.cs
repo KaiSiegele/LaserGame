@@ -6,24 +6,17 @@ using System.Text;
 
 namespace LaserGame
 {
-    public class Board
+    public abstract class Board
     {
-        public Board(IEnumerable<int> verticalLasers, IEnumerable<int> horizontalLasers)
+        protected void SetFields(int xEnd, int yEnd)
         {
-            _verticalLasers = verticalLasers.ToList();
-            _horizontalLasers = horizontalLasers.ToList();
-
-            _xEnd = _verticalLasers.Count() - 1;
-            _yEnd = _horizontalLasers.Count() - 1;
+            _xEnd = xEnd;
+            _yEnd = yEnd;
 
             _endField = new Field(_xEnd, _yEnd);
         }
 
-        internal int CalculatePenalty(Field field)
-        {
-            CheckIsOnBoard(field);
-            return _verticalLasers[field.X] + _horizontalLasers[field.Y];
-        }
+        internal abstract int CalculatePenalty(Field field);
 
         internal List<Field> CalcualteNextFields(Field field)
         {
@@ -49,14 +42,11 @@ namespace LaserGame
         }
 
         [Conditional("DEBUG")]
-        private void CheckIsOnBoard(Field field)
+        internal void CheckIsOnBoard(Field field)
         {
             Debug.Assert(field.X <= _xEnd);
             Debug.Assert(field.Y <= _yEnd);
         }
-
-        private List<int> _horizontalLasers;
-        private List<int> _verticalLasers;
 
         private int _xEnd;
         private int _yEnd;
