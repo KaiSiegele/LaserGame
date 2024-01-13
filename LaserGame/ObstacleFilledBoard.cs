@@ -8,17 +8,19 @@ namespace LaserGame
 {
     public class ObstacleFilledBoard : Board
     {
-        public bool ReadFromFile(string filePath)
+        public override string ToString()
         {
-            if (File.Exists(filePath))
+            return "obstacle filled board";
+        }
+
+        public override bool ReadFromFile(string filePath)
+        {
+            var lines = File.ReadAllLines(filePath);
+            Debug.WriteLine("Parse {0} lines from file {1}", lines.Length, filePath);
+            if (ParseLines(lines))
             {
-                var lines = File.ReadAllLines(filePath);
-                Debug.WriteLine("Parse {0} lines from file {1}", lines.Length, filePath);
-                if (ReadLines(lines))
-                {
-                    SetFields(_obstacles.Count - 1, _cols - 1);
-                    return true;
-                }
+                SetFields(_obstacles.Count - 1, _cols - 1);
+                return true;
             }
             return false;
         }
@@ -29,16 +31,17 @@ namespace LaserGame
             return _obstacles[field.X][field.Y];
         }
 
-        private bool ReadLines(IEnumerable<string> lines)
+        private bool ParseLines(IEnumerable<string> lines)
         {
             int lineno = 1;
             foreach(var line in lines)
             {
-                var obstacles = ReadLine(lineno, line);
+                var obstacles = ReadObstacles(lineno, line);
                 if (obstacles == null)
                 {
                     return false;
                 }
+
                 if (lineno == 1)
                 {
                     _cols = obstacles.Count;
@@ -47,27 +50,34 @@ namespace LaserGame
                         TraceParsing(true, lineno, "Line is empty");
                         return false;
                     }
+                    else if (_cols < 2)
+                    {
+                        TraceParsing(true, lineno, string.Format("Line has only {0} obstacles (expected {1})", _cols, 2));
+                        return false;
+
+                    }
+                    TraceParsing(false, lineno, string.Format("Get {0} obstacles", obstacles.Count));
                     _obstacles.Add(obstacles);
                 }
                 else
                 {
                     if (_cols == obstacles.Count)
                     {
-                        TraceParsing(true, lineno, string.Format("Line has {0} obstacles, expected {1}", obstacles.Count, _cols));
-                        return false;
+                        TraceParsing(false, lineno, string.Format("Get {0} obstacles", obstacles.Count));
+                        _obstacles.Add(obstacles);
                     }
                     else
                     {
-                        TraceParsing(false, lineno, string.Format("Get {0} obstacles", obstacles.Count));
-                        _obstacles.Add(obstacles);
-                    }                   
-                    lineno++;
+                        TraceParsing(true, lineno, string.Format("Line has {0} obstacles, expected {1}", obstacles.Count, _cols));
+                        return false;
+                    }
                 }
+                lineno++;
             }
             return true;        
         }
 
-        private List<int> ReadLine(int lineno, string line)
+        private List<int> ReadObstacles(int lineno, string line)
         {
             var obstacles = line.Split(" ");
             List<int> convertedObstacles = new List<int>();
@@ -89,11 +99,6 @@ namespace LaserGame
                 return convertedObstacles;
             else
                 return null;
-        }
-
-        private static void TraceParsing(bool error, int lineno, string message)
-        {
-            Debug.WriteLine("{0}Line {1}: {2}", error ? "Error in" : " ", lineno, message);
         }
 
         private int _cols = 0;

@@ -8,6 +8,8 @@ namespace LaserGame
 {
     public abstract class Board
     {
+        public abstract bool ReadFromFile(string filePath);
+
         protected void SetFields(int xEnd, int yEnd)
         {
             _xEnd = xEnd;
@@ -39,6 +41,14 @@ namespace LaserGame
             {
                 return _endField;
             }
+        }
+
+        internal protected static void TraceParsing(bool error, int lineno, string message)
+        {
+            if (error)
+                Console.WriteLine("Error in Line {0}: {1}", lineno, message);
+            else
+                Debug.WriteLine("Line {0}: {1}", lineno, message);
         }
 
         [Conditional("DEBUG")]
