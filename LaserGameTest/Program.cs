@@ -1,6 +1,7 @@
 ﻿using LaserGame;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace LaserGameTest
 {
@@ -11,20 +12,28 @@ namespace LaserGameTest
             
             string file = @"..\..\..\Dateien\ObstacleFilledBoard.txt";
             var obstacleFilledBoard = new ObstacleFilledBoard();
-            if (obstacleFilledBoard.ReadFromFile(file))
-            {
-                PlayGame("Play with obstacle fille board", obstacleFilledBoard);
-            }
+            PlayGame(file, obstacleFilledBoard);
 
-            Board board = new LaserRayedBoard(new List<int>() { 1, 5, 8, 2 }, new List<int> { 4, 2, 3, 2 });
-            PlayGame("Play with laser rayed board", board);
+            file = @"..\..\..\Dateien\LaserRayedBoard.txt";
+            var laserRayedBoard = new LaserRayedBoard();
+            PlayGame(file, laserRayedBoard);
         }
 
-        static void PlayGame(string message, Board board)
+        static void PlayGame(string file, Board board)
         {
-            Console.WriteLine(message);
-            var game = new Game();
-            game.Play(board);
+            Console.WriteLine("\nPlay game with {0}", board);
+            if (File.Exists(file))
+            {
+                if (board.ReadFromFile(file))
+                {
+                    var game = new Game();
+                    game.Play(board);
+                }
+                else
+                    Console.WriteLine("Cannot create board from file {0}", file);
+            }
+            else
+                Console.WriteLine("File {0} doesnot exists", file);            
         }
     }
 }
